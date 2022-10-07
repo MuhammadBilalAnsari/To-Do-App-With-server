@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Share</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.2/axios.min.js"></script>
+</head>
+
+<style>
+
+    overflow: auto;
+    background-repeat: no-repeat;
+    background-color: rgb(231, 124, 24);
+    background-size: cover;
+    /* display: flex; */
+    display: block;
+}
+.btn-add{
+    margin-left: 10%;
+}
+
+.btn-delete{
+    margin-top: 5px;
+    position: absolute;
+    right: 5%;
+}
+#ClassName{
+    width: 20%;
+    position: absolute;
+    padding-top: 4px;
+    
+}
+div.icon{
+
+    display: flex;
+    padding-bottom: 5px;
+    padding-left: 50%;
+    flex-direction: row;
+    align-items: flex-end;
+}
+center{
+    background-color: rgb(233, 117, 8);
+}
+#heading{
+    background-color: rgb(255, 255, 255);
+    margin-top: 0%;
+    padding-top: 0%;
+    color: white;
+    outline-color: beige;
+    border: 2px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-style: italic;
+    font-weight: bold;
+    
+}
+a:hover{
+    background-color: (7, 210, 217);
+    color: white;
+    cursor: pointer;
+}
+p{
+   /* color: bisque; */
+}
+.btn{
+    border-color: rgb(7, 210, 217) ;
+    background-color: rgb(231, 124, 24);
+    color: rgba(11, 83, 238, 0.822);
+    border-style: solid;
+    }
+    #ref{
+        width: 100%;
+        /* background-color: black; */
+
+    }
+   
+</style> 
+
+<body>
+    
+   <div id="ghli">
+    <center><h2 style="color: rgb(20, 10, 219)  ;">"Air.SysBorg.Com"</h2></center>
+</div>
+
+   
+        <form onsubmit="postTodo(); return false">
+            
+           
+          <b style="font-size: 22px; color:rgb(20, 10, 219)) ; ">Enter:</b>
+        <input id="todo" type="text" style="width: 75% ; margin-right: 15px; padding: 18px ; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);" placeholder="New Task.." >
+          <button type="submit">Add</button><center>
+            
+        </form>
+
+        <button onclick="getAllTodos()">Refresh</button>
+        <button onclick="getDelete()" style="width: 12% ; ">Delete All</button>
+    
+        <h3 id="current"> </h3>
+        
+      
+    </center>
+  
+
+    <script>
+
+// let api = 'https://shy-gold-gorilla-sock.cyclic.app/'
+
+        function postTodo() {
+            let todoText = document.querySelector("#todo").value
+
+            axios.post(`https://easy-cyan-wildebeest-tux.cyclic.app/todo`, {
+                text: todoText
+            })
+                .then(function (response) {
+
+                    document.querySelector("#current").innerHTML =
+                `         <h3 id="result"> </h3>`              
+                
+                
+                    console.log(response.data);
+
+                    document.querySelector("#result").innerHTML = response.data.message;
+
+                    // response.data.data.map(eachTodo => {
+                    //     document.querySelector("#result").innerHTML += eachTodo
+                    //     document.querySelector("#result").innerHTML += '<br>'
+                    // })
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+
+        }
+
+        function getAllTodos() {
+            axios.get(`https://easy-cyan-wildebeest-tux.cyclic.app/todos`)
+                .then(function (response) {
+                    console.log(response.data);
+
+                    document.querySelector("#result").innerHTML = ""
+
+                    response.data.data.map(eachTodo => {
+                        document.querySelector("#result").innerHTML = eachTodo.text +  document.querySelector("#result").innerHTML
+                        document.querySelector("#result").innerHTML = '<br>' + document.querySelector("#result").innerHTML 
+                    })
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+        
+
+setInterval(getAllTodos, 700);
+
+        function getDelete() {
+         
+                    
+            let code = prompt("Enter Password ")
+            if (code === "9687") {
+                axios.delete('https://easy-cyan-wildebeest-tux.cyclic.app/del')
+            .then(function (response) {
+                    console.log(response.data);
+            
+                })    
+                .catch((error) => {
+                console.log(error)
+            })}
+
+            // function getUpdate(){
+            //     axios.get('http://localhost:3000/edit')
+            //     .then(function (response) {
+            //         console.log(response.data);
+
+            //         document.querySelector("#result").innerHTML = ""
+
+            //         response.data.data.map(eachTodo => {
+            //             document.querySelector("#result").innerHTML = eachTodo.text +  document.querySelector("#result").innerHTML
+            //             document.querySelector("#result").innerHTML = '<br>' + document.querySelector("#result").innerHTML 
+            //         })
+            //     })
+            // }
+
+
+            // function getOnedelete(){
+            //     axios.delete('http://localhost:3000/delete')
+            //     .then(function (response) {
+            //     response.data.data.map(eachTodo => {
+            //              document.querySelector("#result").innerHTML = eachTodo +  document.querySelector("#result").innerHTML
+            //             document.querySelector("#result").innerHTML = '<br>' + document.querySelector("#result").innerHTML 
+                    
+            //     })
+            // })
+            //     .catch((error) => {
+            //     console.log(error)
+            // })
+            // }
+        
+        }
+    
+    </script>
+
+</body>
+
+</html>
